@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Hwg_Attributemanager>
+            <version>0.1.0</version>
+        </Hwg_Attributemanager>
+    </modules>
+    <admin>
+        <routers>
+			<attributemanager>
+				<use>admin</use>
+				<args>
+					<module>Hwg_Attributemanager</module>
+					<frontName>attributemanager</frontName>
+				</args>
+			</attributemanager>
+        </routers>
+    </admin>
+    <default>
+    	<config_vars></config_vars>
+   	</default>
+    <adminhtml>
+		<menu>
+            <attributemanager module="attributemanager">
+                <title>Attribute Manager</title>
+                <sort_order>70</sort_order>               
+                <children>
+                    <category_manager module="attributemanager">
+                        <title>Category Attribute</title>
+                        <sort_order>10</sort_order>
+                        <action>attributemanager/adminhtml_category/category</action>
+                    </category_manager>
+					<customer_manager module="attributemanager">
+                        <title>Customer Attribute</title>
+                        <sort_order>20</sort_order>
+                        <action>attributemanager/adminhtml_customer/customer</action>
+                    </customer_manager>
+					<customer_address_manager module="attributemanager">
+                        <title>Customer Address Attribute</title>
+                        <sort_order>30</sort_order>
+                        <action>attributemanager/adminhtml_address/address</action>
+                    </customer_address_manager>
+                </children>
+            </attributemanager>
+        </menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Hwg_Attributemanager>
+							<title>Attributemanager Module</title>
+							<sort_order>10</sort_order>
+						</Hwg_Attributemanager>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<attributemanager>
+					<file>attributemanager.xml</file>
+				</attributemanager>
+			</updates>
+		</layout>
+    </adminhtml> 
+      
+    <global>
+        <models>
+            <attributemanager>
+                <class>Hwg_Attributemanager_Model</class>
+            </attributemanager>
+        </models>
+        <blocks>
+            <attributemanager>
+                <class>Hwg_Attributemanager_Block</class>
+            </attributemanager>
+        </blocks>
+        <helpers>
+            <attributemanager>
+                <class>Hwg_Attributemanager_Helper</class>
+            </attributemanager>
+        </helpers>
+    </global>
+</config>
