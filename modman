@@ -1,0 +1,5 @@
+# Hwg_Attributemanager
+app/code/local/Hwg/Attributemanager/              app/code/local/Hwg/Attributemanager/
+app/etc/modules/*                                 app/etc/modules/
+app/design/adminhtml/default/default/layout/*     app/design/adminhtml/default/default/layout/
+app/design/adminhtml/default/default/template/*   app/design/adminhtml/default/default/template/
