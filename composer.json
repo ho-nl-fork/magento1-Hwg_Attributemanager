@@ -1,0 +1,14 @@
+{
+    "name": "hwg/attributemanager",
+    "type": "magento-module",
+    "license": "public",
+    "authors": [
+        {
+            "name": "Sanjay Modasia",
+            "email": "sanjaymodasia@gmail.com"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
