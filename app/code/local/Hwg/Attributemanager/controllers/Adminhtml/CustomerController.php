@@ -12,7 +12,7 @@ class Hwg_Attributemanager_Adminhtml_CustomerController extends Mage_Adminhtml_C
 		
 		$this->_block = 'customer';
 		$this->_type =  'customer';
-		
+        $this->getRequest()->setParam('type', $this->_type);
     }
     
 	protected function _initAction() {

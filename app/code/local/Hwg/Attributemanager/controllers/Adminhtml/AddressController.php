@@ -12,7 +12,7 @@ class Hwg_Attributemanager_Adminhtml_AddressController extends Mage_Adminhtml_Co
 		
 		$this->_block = 'address';
 		$this->_type =  'customer_address';
-		
+        $this->getRequest()->setParam('type', $this->_type);
     }
     
 	protected function _initAction() {
