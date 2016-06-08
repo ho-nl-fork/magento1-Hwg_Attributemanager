@@ -97,7 +97,7 @@ class Hwg_Attributemanager_Block_Adminhtml_Category_Edit_Tab_Main extends Mage_A
 
         $response = new Varien_Object();
         $response->setTypes(array());
-        //Mage::dispatchEvent('adminhtml_product_attribute_types', array('response'=>$response));
+        Mage::dispatchEvent('adminhtml_category_attribute_types', array('response'=>$response));
 
         $_disabledTypes = array();
         $_hiddenFields = array();
