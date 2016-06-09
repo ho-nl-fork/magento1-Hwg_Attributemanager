@@ -86,7 +86,7 @@ class Hwg_Attributemanager_Adminhtml_CategoryController extends Mage_Adminhtml_C
 				} else {
 					$model->setUpdateTime(now());
 				}
-				
+
 				$model->save();
 				$id=$model->getId();
 				
