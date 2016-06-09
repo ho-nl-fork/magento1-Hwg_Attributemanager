@@ -43,6 +43,25 @@ class Hwg_Attributemanager_Block_Adminhtml_Category_Edit_Tab_Main extends Mage_A
             'required' => true,
         ));
 
+        $categoryType = Mage::getModel('eav/config')->getEntityType('catalog_category')->getEntityTypeId();
+        $categoryAttributeSet = Mage::getModel('eav/entity_attribute_set')->load($categoryType, 'entity_type_id');
+
+        $groupCollection = Mage::getModel('eav/entity_attribute_group')
+            ->getCollection()
+            ->addFieldToFilter('attribute_set_id', $categoryAttributeSet->getId());
+        $groups = array();
+        foreach($groupCollection as $group) {
+            $groups[$group->getId()] = $group->getAttributeGroupName();
+        }
+
+        $fieldset->addField('attribute_group_id', 'select', array(
+            'name'  => 'attribute_group_id',
+            'label' => Mage::helper('catalog')->__('Group'),
+            'title' => Mage::helper('catalog')->__('Group'),
+            'required' => true,
+            'values' => $groups
+        ));
+
         $scopes = array(
             Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE =>Mage::helper('catalog')->__('Store View'),
             Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_WEBSITE =>Mage::helper('catalog')->__('Website'),
@@ -97,7 +116,7 @@ class Hwg_Attributemanager_Block_Adminhtml_Category_Edit_Tab_Main extends Mage_A
 
         $response = new Varien_Object();
         $response->setTypes(array());
-        //Mage::dispatchEvent('adminhtml_product_attribute_types', array('response'=>$response));
+        Mage::dispatchEvent('adminhtml_category_attribute_types', array('response'=>$response));
 
         $_disabledTypes = array();
         $_hiddenFields = array();
@@ -139,12 +158,6 @@ class Hwg_Attributemanager_Block_Adminhtml_Category_Edit_Tab_Main extends Mage_A
             'value' => Mage::getModel('eav/entity')->setType($this->getRequest ()->getParam ( 'type' ))->getTypeId()
         ));
         
-        $fieldset->addField('attribute_group_id', 'hidden', array(
-            'name' => 'attribute_group_id',
-            'value' => Mage::getModel('eav/entity')->setType($this->getRequest ()->getParam ( 'type' ))->getTypeId()
-        ));
-        
-         
  /*******************************************************/
         $fieldset->addField('is_unique', 'select', array(
             'name' => 'is_unique',
@@ -250,7 +263,18 @@ class Hwg_Attributemanager_Block_Adminhtml_Category_Edit_Tab_Main extends Mage_A
         //var_dump($model->getData());exit;
         $form->addValues($model->getData());
         
-                
+
+        // load group ID 
+        // should only lead to one match as we have no attribute sets for categories
+
+        $adapter = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $select  = $adapter->select()
+            ->from('eav_entity_attribute') // FIXME: Fetch table name the right way
+            ->where('attribute_id = ?', $model->getAttributeId());
+        $row = $adapter->fetchRow($select);
+        $groupId = $row ? $row['attribute_group_id'] : 0;
+
+        $form->addValues(array('attribute_group_id' => $groupId));
 
         $this->setForm($form);
 

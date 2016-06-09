@@ -12,7 +12,8 @@ class Hwg_Attributemanager_Adminhtml_CategoryController extends Mage_Adminhtml_C
         
 		$this->_block = 'category';
 		$this->_type = 'catalog_category';
-		
+		$this->getRequest()->setParam('type', $this->_type);
+
     }
     
 	protected function _initAction() {
@@ -85,7 +86,7 @@ class Hwg_Attributemanager_Adminhtml_CategoryController extends Mage_Adminhtml_C
 				} else {
 					$model->setUpdateTime(now());
 				}
-				
+
 				$model->save();
 				$id=$model->getId();
 				
